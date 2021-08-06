@@ -31,6 +31,13 @@ survcorr = function
   else
     tmp2 = as.matrix(model.frame(formula2, data))
 
+  ## checking for data integrity
+  if (nrow(tmp1) != nrow(tmp2)) {
+    stop(paste('Unmatching models:', nrow(tmp1), '!=', nrow(tmp2),
+               'Check data to make sure that there are no NAs in time/event.'
+               ))
+  }
+
   colnames(tmp1) = colnames(tmp2) = c("time", "status")
   tmp1 = as.data.frame(tmp1)
   tmp2 = as.data.frame(tmp2)
